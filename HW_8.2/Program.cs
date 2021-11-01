@@ -11,35 +11,30 @@ namespace HW_8._2
     {
         static void Main(string[] args)
         {
-            string path = "Lag.txt";
-            if (File.Exists(path))
+            string path = "Lag2.txt";
+            if (!File.Exists(path))
             {
                 File.Create(path);
             }
-            int[] array = new int[10];
-            Random random = new Random();
-            int S = 0;
-            for (int i = 0; i < 10; i++)
+            using (StreamWriter sum = new StreamWriter(path))
             {
-                array[i] = random.Next(0, 10);
-                Console.Write("{0} ", array[i]);
-                S += array[i];
-            }
-            using (StreamWriter sum = new StreamWriter(path, true))
-            {
-                sum.WriteLine(S);
-            }
-            int s1 = 0; //сумма цифр
-            string[] p;
-            using (StreamReader ou = new StreamReader(path))
-            {
-                p= Convert.ToInt32(ou.ReadToEnd());
-                foreach (int a in p)
+                Random random = new Random();
+                for (int i = 0; i < 10; i++)
                 {
-                    s1 += a;
+                    sum.Write(random.Next(0, 10));
                 }
             }
-            Console.WriteLine(s1);
+            using (StreamReader ou = new StreamReader(path))
+            {
+                string arStr = ou.ReadToEnd();
+                int s1 = 0;
+                char[] s = arStr.ToCharArray();
+                foreach (int x in s)
+                {
+                    s1 += x;
+                }
+                Console.WriteLine(s1);
+            }
             Console.ReadKey();
         }
     }
